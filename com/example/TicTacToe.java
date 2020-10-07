@@ -42,10 +42,18 @@ public class TicTacToe {
 		}
 	}
 	
+	public static void makeAMove() {
+		System.out.println("Enter the position to mark");
+		int num= sc.nextInt();
+		BOARD[num]=PLAYER;
+		printBoard(BOARD);
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
 		chooseXO();
 		printBoard(BOARD);
+		makeAMove();
 	}
 }
