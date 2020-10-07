@@ -43,7 +43,7 @@ public class TicTacToe {
 	}
 	
 	public static void makeAMove() {
-		System.out.println("Enter the position() to mark");
+		System.out.println("Enter the position(1 to 9) to mark");
 		int num= sc.nextInt();
 		if(BOARD[num]==' ') {
 			BOARD[num]=PLAYER;
@@ -66,11 +66,23 @@ public class TicTacToe {
 		makeAMove();
 	}
 	
+	public static int whoGoesFirst() {
+		int diceValue=(int) Math.floor(Math.random()*10)%2;
+		if(diceValue==0) {
+			System.out.println("Computer goes First");
+		}
+		else if(diceValue==1){
+			System.out.println("Player goes First");
+		}
+		return diceValue;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
 		chooseXO();
 		printBoard(BOARD);
+		int diceVal=whoGoesFirst();
 		makeAMove();
 		makeAMove();
 		checkAndMakeMove();
