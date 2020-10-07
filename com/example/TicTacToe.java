@@ -42,5 +42,6 @@ public class TicTacToe {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
 		chooseXO();
+		printBoard(BOARD);
 	}
 }
