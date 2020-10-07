@@ -43,10 +43,18 @@ public class TicTacToe {
 	}
 	
 	public static void makeAMove() {
-		System.out.println("Enter the position to mark");
+		System.out.println("Enter the position(1-9) to mark");
 		int num= sc.nextInt();
-		BOARD[num]=PLAYER;
-		printBoard(BOARD);
+		if(BOARD[num]==' ') {
+			BOARD[num]=PLAYER;
+			printBoard(BOARD);
+		}
+		else {
+			System.out.println("Position is not empty");
+			printBoard(BOARD);
+			makeAMove();
+		}
+		
 	}
 	
 	public static void main(String[] args) {
@@ -54,6 +62,7 @@ public class TicTacToe {
 		BOARD=boardCreate();
 		chooseXO();
 		printBoard(BOARD);
+		makeAMove();
 		makeAMove();
 	}
 }
