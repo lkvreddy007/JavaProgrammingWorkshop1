@@ -43,7 +43,7 @@ public class TicTacToe {
 	}
 	
 	public static void makeAMove() {
-		System.out.println("Enter the position(1-9) to mark");
+		System.out.println("Enter the position() to mark");
 		int num= sc.nextInt();
 		if(BOARD[num]==' ') {
 			BOARD[num]=PLAYER;
@@ -57,6 +57,15 @@ public class TicTacToe {
 		
 	}
 	
+	public static void checkAndMakeMove() {
+		for(int i=1;i<10;i++) {
+			if(BOARD[i]==' ') {
+				System.out.println("Position "+i+" is empty");
+			}
+		}
+		makeAMove();
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
@@ -64,5 +73,6 @@ public class TicTacToe {
 		printBoard(BOARD);
 		makeAMove();
 		makeAMove();
+		checkAndMakeMove();
 	}
 }
