@@ -15,10 +15,14 @@ public class TicTacToe {
 		}
 		return boardloc;
 	}
+	
 	public static void printBoard(char[] boardPrint) {
-		for(int i=1;i<10;i++) {
-			System.out.println(boardPrint[i]);
-		}
+		System.out.println(" "+boardPrint[1]+" | "+boardPrint[2]+" | "+boardPrint[3]);
+		System.out.println("-----------");
+		System.out.println(" "+boardPrint[4]+" | "+boardPrint[5]+" | "+boardPrint[6]);
+		System.out.println("-----------");
+		System.out.println(" "+boardPrint[7]+" | "+boardPrint[8]+" | "+boardPrint[9]);
+		
 	}
 	
 	public static void chooseXO() {
