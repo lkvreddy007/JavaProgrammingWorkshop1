@@ -42,36 +42,37 @@ public class TicTacToe {
 		}
 	}
 	
-	public static void makeAMove(char sign) {
+	public static char[] makeAMove(char sign,char[] board) {
+		char[] temp=board;
 		System.out.println("Enter the position(1 to 9) to mark");
 		int num= sc.nextInt();
-		if(BOARD[num]==' ') {
-			BOARD[num]=sign;
-			printBoard(BOARD);
+		if(temp[num]==' ') {
+			temp[num]=sign;
+			printBoard(temp);
 		}
 		else {
 			System.out.println("Position is not empty");
-			printBoard(BOARD);
-			makeAMove(sign);
+			printBoard(temp);
+			makeAMove(sign,temp);
 		}
-		
+		return temp;
 	}
 	
-	public static void checkAndMakeMove(String turn) {
-		for(int i=1;i<10;i++) {
-			if(BOARD[i]==' ') {
-				System.out.println("Position "+i+" is empty");
-			}
-		}
-		char charVariable;
+	public static char[] checkAndMakeMove(String turn,char[] board) {
+		char charVariable=' ';
 		if(turn=="player") {
 			charVariable=PLAYER;
 		}
 		else {
 			charVariable=COMPUTER;
 		}
-		makeAMove(charVariable);
+		for(int i=1;i<10;i++) {
+			if(board[i]==' ') {
+				System.out.println("Position "+i+" is empty");
+			}
+		}
 		
+		return makeAMove(charVariable,board);
 	}
 	
 	public static int whoGoesFirst() {
@@ -85,7 +86,7 @@ public class TicTacToe {
 		return toss;
 	}
 	
-	public static boolean winCondition(){
+	public static boolean winCondition(char[] board){
 		String win="";
 		String playerVal=String.valueOf(PLAYER);
 		String playerWin=playerVal+playerVal+playerVal;
@@ -94,50 +95,50 @@ public class TicTacToe {
 		
 		for(int i=1;i<10;i++) {
 			if(i==1) {
-				win=String.valueOf(BOARD[1])+String.valueOf(BOARD[2])+String.valueOf(BOARD[3]);
+				win=String.valueOf(board[1])+String.valueOf(board[2])+String.valueOf(board[3]);
 			}
 			else if(i==2) {
-				win=String.valueOf(BOARD[4])+String.valueOf(BOARD[5])+String.valueOf(BOARD[6]);
+				win=String.valueOf(board[4])+String.valueOf(board[5])+String.valueOf(board[6]);
 			}
 			else if(i==3) {
-				win=String.valueOf(BOARD[7])+String.valueOf(BOARD[8])+String.valueOf(BOARD[9]);
+				win=String.valueOf(board[7])+String.valueOf(board[8])+String.valueOf(board[9]);
 			}
 			else if(i==4) {
-				win=String.valueOf(BOARD[1])+String.valueOf(BOARD[4])+String.valueOf(BOARD[7]);
+				win=String.valueOf(board[1])+String.valueOf(board[4])+String.valueOf(board[7]);
 			}
 			else if(i==5) {
-				win=String.valueOf(BOARD[2])+String.valueOf(BOARD[5])+String.valueOf(BOARD[8]);
+				win=String.valueOf(board[2])+String.valueOf(board[5])+String.valueOf(board[8]);
 			}
 			else if(i==6) {
-				win=String.valueOf(BOARD[3])+String.valueOf(BOARD[6])+String.valueOf(BOARD[9]);
+				win=String.valueOf(board[3])+String.valueOf(board[6])+String.valueOf(board[9]);
 			}
 			else if(i==7) {
-				win=String.valueOf(BOARD[1])+String.valueOf(BOARD[5])+String.valueOf(BOARD[9]);
+				win=String.valueOf(board[1])+String.valueOf(board[5])+String.valueOf(board[9]);
 			}
 			else if(i==8) {
-				win=String.valueOf(BOARD[3])+String.valueOf(BOARD[5])+String.valueOf(BOARD[7]);
+				win=String.valueOf(board[3])+String.valueOf(board[5])+String.valueOf(board[7]);
 			}
 			
 			if(win.equals(playerWin)) {
 				System.out.println("Player has won");
-				return false;
+				return true;
 			}
 			else if(win.equals(compWin)) {
 				System.out.println("Computer has won");
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public static boolean tieCondition() {
-		for(int i=1;i<10;i++) {
-			if(BOARD[i]==' ') {
 				return true;
 			}
 		}
-		System.out.println("Draw");
 		return false;
+	}
+	
+	public static boolean tieCondition(char[] board) {
+		for(int i=1;i<10;i++) {
+			if(board[i]==' ') {
+				return false;
+			}
+		}
+		System.out.println("Draw");
+		return true;
 	}
 	
 	public static String changeTurn(String currentTurn) {
@@ -149,6 +150,22 @@ public class TicTacToe {
 			temp="computer";
 		}
 		return temp;
+	}
+	
+	public static int computerPlay(char[] board) {
+		char charVariable=COMPUTER;
+		int num=0;
+		char[] b=board;
+		for(int i=1;i<10;i++) {
+			if(b[i]==' ') {
+				b[i]=charVariable;
+				if(winCondition(b)) {
+					num=i;
+				}
+				b[i]=' ';
+			}
+		}
+		return num;
 	}
 	
 	public static void main(String[] args) {
@@ -164,9 +181,20 @@ public class TicTacToe {
 		else {
 			turn="player";
 		}
-		while(winCondition()&&tieCondition()) {
+		while(!winCondition(BOARD)&&!tieCondition(BOARD)) {
 			System.out.println(turn+"'s turn");
-			checkAndMakeMove(turn);
+			if(turn=="computer") {
+				int num=computerPlay(BOARD);
+				if(num==0) {
+					checkAndMakeMove(turn,BOARD);
+				}
+				else {
+					BOARD[num]=COMPUTER;
+				}
+			}
+			else {
+				checkAndMakeMove(turn,BOARD);
+			}
 			turn=changeTurn(turn);
 		}
 	}
