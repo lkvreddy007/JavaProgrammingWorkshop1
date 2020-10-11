@@ -215,8 +215,7 @@ public class TicTacToe {
 		return cellNum;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("Welcome to Tic Tac Toe");
+	public static void gameExecutor() {
 		BOARD=boardCreate();
 		chooseXO();
 		printBoard(BOARD);
@@ -241,7 +240,8 @@ public class TicTacToe {
 							if(centre==0) {
 								int sideCell=takeAvailableSides(BOARD);
 								if(sideCell==0) {
-									
+									System.out.println("Entered into Black Hole");
+									checkAndMakeMove(turn, BOARD);
 								}
 								else{
 									BOARD[sideCell]=COMPUTER;
@@ -275,5 +275,10 @@ public class TicTacToe {
 			}
 			turn=changeTurn(turn);
 		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Welcome to Tic Tac Toe");
+		gameExecutor();
 	}
 }
