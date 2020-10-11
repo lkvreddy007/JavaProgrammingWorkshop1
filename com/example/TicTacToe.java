@@ -275,7 +275,20 @@ public class TicTacToe {
 			}
 			turn=changeTurn(turn);
 		}
+		oneMoreGame();
 	}
+	
+	public static void oneMoreGame() {
+		System.out.println("Please enter 1 to play again and 2 to exit");
+		int choice =sc.nextInt();
+		if(choice==1) {
+			gameExecutor();
+		}
+		else {
+			System.exit(0);
+		}
+	}
+
 	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
