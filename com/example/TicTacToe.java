@@ -120,11 +120,11 @@ public class TicTacToe {
 			}
 			
 			if(win.equals(playerWin)) {
-				System.out.println("Player has won");
+				//System.out.println("Player has won");
 				return true;
 			}
 			else if(win.equals(compWin)) {
-				System.out.println("Computer has won");
+				//System.out.println("Computer has won");
 				return true;
 			}
 		}
@@ -168,6 +168,21 @@ public class TicTacToe {
 		return num;
 	}
 	
+	public static int winBlock(char[] board) {
+		char opponentSign=PLAYER;
+		int num=0;
+		for(int i=1;i<10;i++) {
+			if(board[i]==' ') {
+				board[i]=opponentSign;
+				if(winCondition(board)) {
+					num=i;
+				}
+				board[i]=' ';
+			}
+		}
+		return num;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
@@ -186,14 +201,28 @@ public class TicTacToe {
 			if(turn=="computer") {
 				int num=computerPlay(BOARD);
 				if(num==0) {
+					int n= winBlock(BOARD);
+					if(n==0) {
 					checkAndMakeMove(turn,BOARD);
+					}
+					else {
+						BOARD[n]=COMPUTER;
+						printBoard(BOARD);
+					}
 				}
 				else {
 					BOARD[num]=COMPUTER;
+					printBoard(BOARD);
+				}
+				if(winCondition(BOARD)) {
+					System.out.println("Computer has Won");
 				}
 			}
 			else {
 				checkAndMakeMove(turn,BOARD);
+				if(winCondition(BOARD)) {
+					System.out.println("Player has Won");
+				}
 			}
 			turn=changeTurn(turn);
 		}
