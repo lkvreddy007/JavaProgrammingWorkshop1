@@ -68,7 +68,7 @@ public class TicTacToe {
 		}
 		for(int i=1;i<10;i++) {
 			if(board[i]==' ') {
-				System.out.println("Position "+i+" is empty");
+				System.out.println("Tip:: Position "+i+" is empty");
 			}
 		}
 		
@@ -194,7 +194,26 @@ public class TicTacToe {
 		}
 		return selectedCorner;
 	}
-
+	
+	public static int takeCentre(char[] board) {
+		int centre=0;
+		if(board[5]==' ') {
+			centre=5;
+		}
+		return centre;
+	}
+	
+	public static int takeAvailableSides(char[] board) {
+		int cellNum=0;
+		int[] sides= {2,4,6,8};
+		for(int i:sides) {
+			if(board[i]==' ') {
+				cellNum=i;
+				break;
+			}
+		}
+		return cellNum;
+	}
 	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
@@ -218,7 +237,19 @@ public class TicTacToe {
 					if(n==0) {
 						int selectedCorner=takeCorner(BOARD);
 						if(selectedCorner==0) {
-							checkAndMakeMove(turn,BOARD);
+							int centre=takeCentre(BOARD);
+							if(centre==0) {
+								int sideCell=takeAvailableSides(BOARD);
+								if(sideCell==0) {
+									
+								}
+								else{
+									BOARD[sideCell]=COMPUTER;
+								}
+							}
+							else {
+								BOARD[centre]=COMPUTER;
+							}
 						}
 						else {
 							BOARD[selectedCorner]=COMPUTER;
