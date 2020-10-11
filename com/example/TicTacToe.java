@@ -183,6 +183,19 @@ public class TicTacToe {
 		return num;
 	}
 	
+	public static int takeCorner(char[] board) {
+		int[] corners= {1,3,7,9};
+		int selectedCorner=0;
+		for(int i:corners) {
+			if(board[i]==' ') {
+				selectedCorner=i;
+				break;
+			}
+		}
+		return selectedCorner;
+	}
+
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to Tic Tac Toe");
 		BOARD=boardCreate();
@@ -203,17 +216,22 @@ public class TicTacToe {
 				if(num==0) {
 					int n= winBlock(BOARD);
 					if(n==0) {
-					checkAndMakeMove(turn,BOARD);
+						int selectedCorner=takeCorner(BOARD);
+						if(selectedCorner==0) {
+							checkAndMakeMove(turn,BOARD);
+						}
+						else {
+							BOARD[selectedCorner]=COMPUTER;
+						}
 					}
 					else {
 						BOARD[n]=COMPUTER;
-						printBoard(BOARD);
 					}
 				}
 				else {
 					BOARD[num]=COMPUTER;
-					printBoard(BOARD);
 				}
+				printBoard(BOARD);
 				if(winCondition(BOARD)) {
 					System.out.println("Computer has Won");
 				}
